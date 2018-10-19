@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue-ticket</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+	<style>
+		#app{
+			margin: 30px 0;
+		}
+		.stage {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: #ccc;
+			border-radius: 5px;
+			font-size: 50px;
+			font-weight: bold;
+			height: 150px;
+			color: #fff;
+		}
+		.ul-tickets{
+			padding: 10px;
+			margin: 0;
+			display: block;
+			list-style: none;
+		}
+		.li-ticket{
+			display: inline-block;
+			padding: 3px;
+			margin: 3px;
+			min-width: 20px;
+			min-height: 25px;
+			border-radius: 4px;
+			opacity: 0.6;
+			cursor: pointer;
+			transition: .05s all ease;
+		}
+		.li-ticket:hover{
+			opacity: 1;
+		}
+		.type-label{
+			text-align: center;
+			font-size: 20px;
+			text-transform: uppercase; 
+			letter-spacing: 1px;
+			font-weight: 500;
+		}
+		.added-tickets{
+			background: #eee;
+			padding: 10px 0;
+			border-radius: 5px;
+			font-size: 20px;
+			font-weight: 500;
+			text-align: center;
+			height: 100%;
+
+		}
+		.added-ticket{
+		    position: relative;
+			margin: 20px;
+			height: 50px;
+			border: 1px solid #ccc;
+		}
+		.remove-ticket {
+		    position: absolute;
+		    right: 10px;
+		    top: 10px;
+		    font-size: 10px;
+		}
+		.total-submit-block{
+			background: #EEEEEE;
+		}
+		.total{
+			font-size: 28px;
+			padding: 15px 10px;
+    		font-weight: 500;
+		}
+		.buy-now{
+			color: #fff;
+			background: #6b6b6b;
+			border: 2px solid #6b6b6b;
+			padding: 10px 40px;
+			font-size: 20px;
+			float: right;
+			margin: 12px;
+			transition: .2s all ease;
+		}
+		.buy-now:hover{
+			background: #EEEEEE;
+			border: 2px solid #000;
+			color: #000;
+		}
+		.added-ticket-type {
+		    position: relative;
+		    top: 8px;
+		    left: 10px;
+		    float: left;
+		    color: #6d6d6d;
+		}
+		.added-ticket-price {
+		    position: relative;
+		    top: 8px;
+		    right: 55px;
+		    float: right;
+		    color: #6d6d6d;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			<div class="row">
+				<div class="col-6">
+					<div class="stage">
+						STAGE
+					</div>
+					<div class="tickets-map">
+						<ul v-for="type in ticketsType" :class="type.label+'-tickets-group ul-tickets'">
+							<div class="type-label">{{type.label}} : {{type.quantity}} </div>
+							<li 
+								v-for="key in type.quantity" 
+								:class="type.label+'-ticket li-ticket'"
+								:style="'background:' + type.color"
+								@click="addToCart(type.label, type.quantity, type.color, type.price)"
+								>
+									
+							</li>
+						</ul>
+					</div>
+					<div class="total-submit-block">
+						<div class="row">
+							<div class="col-6">
+								<div class="total">
+									Total: {{sum}}
+								</div>
+							</div>
+							<div class="col-6">
+								<button class="btn buy-now">
+									Buy now
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="added-tickets">
+						TICKETS IN CART
+						<div class="added-ticket" v-for="(key, i) in cart" :style="'border-left: 10px solid '+ cart[i].color">
+							<button class="btn btn-danger remove-ticket" @click="removeTicket(i, key.type, key.price)">X</button>
+							<span class="added-ticket-type">Type: {{cart[i].type}} ticket</span>
+							<span class="added-ticket-price">Price: {{cart[i].price}} </span>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="vue.js" type="text/javascript"></script>
+	<script src="script.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	
+</body>
+</html>
